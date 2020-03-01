@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <title>CargoSim</title>
+        
+        <link href="/static/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="/static/assets/css/style.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="/static/assets/font-awesome-4.7.0/css/font-awesome.min.css">
+        
+    </head>
+    
+
+    <body>
+        <style>
+            table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+        </style>
+            <style>
+              
+              
+              .bar {
+                  fill: #5f89ad;
+              }
+              
+              .axis {
+                  font-size: 13px;
+              }
+              
+              .axis path,
+              .axis line {
+                  fill: none;
+                  display: none;
+              }
+              
+              .label {
+                  font-size: 13px;
+              }
+          </style>
+          
+        <div id="wrapper">
+
+            <div class="container-fluid">
+    
+              <div class="card mt-3 mb-0">
+                  <div class="card-body">
+                      <!--button class="btn btn-info position-fixed" style="z-index: 99">
+                        <i class="fa fa-bars" aria-hidden="true"></i>
+                      </button-->
+                      <div id="tabs">
+                        <ul>
+                          <li><a href="#tabs-1">Avl-CAP</a></li>
+                          <li><a href="#tabs-2">Target-REV</a></li>
+                          <li><a href="#tabs-3">Simulation</a></li>
+                        </ul>
+                        <div id="tabs-1">
+                          <div class="row" style="padding-bottom: 10px; margin-top: 0px;">
+                            <div class="col-9 d-flex">
+                              <div style=" height: 250px; width: 300px;  padding-left: 20px; ">
+                                <h6 style="margin-left: 20px;font-weight: bold;">Schedule</h6>
+                                <ol type="i">
+                                  <li id="trip_name">Flight No</li>
+                                  <li id="from">Origin</li>
+                                  <li id="to">Destination</li>
+                                  <li id="aircraft">Equipment</li>
+                                  <li id="sta">STD</li>
+                                  <li id="std">STA</li>
+                                  <li id="freq">Frequency</li>
+                                </ol>
+                                <h6 style="margin-left: 20px; font-weight:bold ;">Passenger Capacity</h6>
+                                <table >
+                                  
+                                  <tr style="line-height: .80em;">
+                                    <td>Economy</td>
+                                    <td>Business</td>
+                                    <td>Total</td>
+                                  </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td id="bclass"></td>
+                                    <td id="eclass"></td>
+                                    <td id="ptotal"></td>
+                                  </tr>
+                                </table> 
+                              </div>
+                              <div  style="height: 250px; width: 200px;">
+                                <h6 style="margin-left: 20px;font-weight:bold;">Hold Capacity</h6>
+                                <table style="width: 200px;margin-left: 25px;">
+                                  <tr style="line-height: .80em;">
+                                    <td>Type</td>
+                                    <td>Units</td>
+                                    <td>CBM</td>
+                                    <td>Kilos</td>
+                                  </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td>AKE</td>
+                                    <td id="ake_std_units"></td>
+                                    <td id="ake_std_cbm"></td>
+                                    <td id="ake_std_kilos"></td>
+                                  </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td>PMC</td>
+                                    <td id="pmc_std_units"></td>
+                                    <td id="pmc_std_cbm"></td>
+                                    <td id="pmc_std_kilos"></td>
+                                  </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td>BULK</td>
+                                    <td id="bulk_std_units"></td>
+                                    <td id="bulk_std_cbm"></td>
+                                    <td id="bulk_std_kilos"></td>
+                                  </tr>
+                                </table>
+                                <h6 style="margin-left: 20px;font-weight:bold;">Projected Passenger Load @ 100%
+                                </h6>
+                                <table style="width: 200px;margin-left: 25px;">
+                                  <tr style="line-height: .80em;">
+                                    <td>Type</td>
+                                    <td>Units</td>
+                                    <td>CBM</td>
+                                    <td>Kilos</td>
+                                  </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td>AKE</td>
+                                    <td id="ake_p_units"></td>
+                                    <td id="ake_p_cbm"></td>
+                                    <td id="ake_p_kilos"></td>
+                                  </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td>PMC</td>
+                                    <td id="pmc_p_units"></td>
+                                    <td id="pmc_p_cbm"></td>
+                                    <td id="pmc_p_kilos"></td>
+                                  </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td>BULK</td>
+                                    <td id="bulk_p_units"></td>
+                                    <td id="bulk_p_cbm"></td>
+                                    <td id="bulk_p_kilos"></td>
+                                  </tr>
+                                </table>
+                              </div>
+                              <div style="height: 265px; width: 300px; padding-left: 35px;">
+                                                              
+                                
+                                <h6 style="margin-left: 20px;font-weight:bold;">Available Cargo Capacity
+                                </h6>
+                                <table style="width: 200px;margin-left: 25px;">
+                                  <tr style="line-height: .80em;">
+                                    <td>Type</td>
+                                    <td>Units</td>
+                                    <td>CBM</td>
+                                    <td>Kilos</td>
+                                  </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td>AKE</td>
+                                    <td id="ake_avl_units"></td>
+                                    <td id="ake_avl_cbm"></td>
+                                    <td id="ake_avl_kilos"></td>
+                                  </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td>PMC</td>
+                                    <td id="pmc_avl_units"></td>
+                                    <td id="pmc_avl_cbm"></td>
+                                    <td id="pmc_avl_kilos"></td>
+                                  </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td>BULK</td>
+                                    <td id="bulk_avl_units"></td>
+                                    <td id="bulk_avl_cbm"></td>
+                                    <td id="bulk_avl_kilos"></td>
+                                  </tr>
+                                </table>
+                                <h6 style="margin-left: 20px;font-weight:bold;">Total AKE-PMC-BULK Target
+                                </h6>
+                                <table style="width: 200px;margin-left: 25px;">
+                                  <tr style="line-height: .80em;">
+                                    <td>Type</td>
+                                    <td>Units</td>
+                                    <td>CBM</td>
+                                    <td>Kilos</td>
+                                  </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td>Total</td>
+                                    <td id="total_cargo_units"></td>
+                                    <td id="total_cargo_cbm"></td>
+                                    <td id="total_cargo_kgs"></td>
+                                  </tr>
+                                  
+                                </table>
+                                
+
+                              </div>
+                              
+                            </div>
+                            <style>
+                              
+
+                            </style>
+                            <div class="col-3 d-flex" id="graphicholder">
+                              <div id="graphic" style="margin-top: 10px;">
+                              </div>
+
+
+                            </div>
+                          </div>
+                        
+                        </div>
+                        <div id="tabs-2">
+                          <div class="row" style="padding-bottom: 10px; margin-top: 0px;">
+                            <div class="col-9 d-flex">
+                              
+                              <div style="height: 265px; width: 300px; padding-left: 35px;">
+                                                              
+                                
+                                <h6 style="margin-left: 20px;font-weight:bold;">Target Capacity Utilisation
+                                </h6>
+                                <table style="width: 300px;margin-left: 25px;">
+                                  <tr style="line-height: .80em;">
+                                    <td>Type</td>
+                                    <td>Units</td>
+                                    <td>CBM</td>
+                                    <td>Kilos</td>
+                                  </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td>AKE</td>
+                                    <td id="ake_avl_units2"></td>
+                                    <td id="ake_avl_cbm2"></td>
+                                    <td id="ake_avl_kilos2"></td>
+                                  </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td>PMC</td>
+                                    <td id="pmc_avl_units2"></td>
+                                    <td id="pmc_avl_cbm2"></td>
+                                    <td id="pmc_avl_kilos2"></td>
+                                  </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td>BULK</td>
+                                    <td id="bulk_avl_units2"></td>
+                                    <td id="bulk_avl_cbm2"></td>
+                                    <td id="bulk_avl_kilos2"></td>
+                                  </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td>Total</td>
+                                    <td id="total_cargo_units2"></td>
+                                    <td id="total_cargo_cbm2"></td>
+                                    <td id="total_cargo_kgs2"></td>
+                                  </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td>No-show at 10%</td>
+                                    <td id="no_show_units"></td>
+                                    <td id="no_show_cbm2"></td>
+                                    <td id="no_show_kgs2"></td>
+                                  </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td>Overbooking at 10%</td>
+                                    <td id="overbooking_units2"></td>
+                                    <td id="overbooking_cbm2"></td>
+                                    <td id="overbooking_kgs2"></td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </div>
+                            <style>
+                              
+
+                            </style>
+                            <div class="col-3 d-flex" id="graphicholder">
+                              <div id="graphic" style="margin-top: 10px;">
+                              </div>
+
+
+                            </div>
+                          </div>
+                        </div>
+                        <div id="tabs-3">
+                        </div>
+
+
+                      </div>
+                      
+                      
+                  </div>
+              </div>
+
+              <div class="card mt-3 mb-0">
+                  <div class="card-body controls">
+                        {% for item in sectors %}
+                        <a href="#" id="{{item.name}}" class="btn btn-link">{{ item.name }} </a>
+                            
+                        {% endfor %}
+                        <button onclick="simulate(0)">Simulate</button>
+                        <button onclick="pause()">Pause</button>
+                  </div>
+              </div>
+              
+              <div class="card mt-3 mb-0">
+                <div class="card-body">
+                  <div class="form-group">
+                      <p id="logger1"></p>
+                      <p id="logger2"></p>
+                    </div>
+                </div>
+              </div>
+
+            </div>
+        </div>
+        <!-- END wrapper -->
+          
+
+        <!-- jQuery  -->
+
+        <script src="/static/assets/js/jquery.min.js"></script>
+        <script src="/static/assets/js/bootstrap.bundle.min.js"></script>
+        <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+       
+        
+
+        <script>
+
+        function updateChart(d){
+
+          var data = d;
+          
+          $( "#graphic" ).remove();
+
+          $("#graphicholder").append('<div id="graphic" style="margin-top: 1px;"></div>');
+
+  
+          //sort bars based on value
+          data = data.sort(function (a, b) {
+              return d3.ascending(a.value, b.value);
+          })
+  
+          //set up svg using margin conventions - we'll need plenty of room on the left for labels
+          var margin = {
+              top: 15,
+              right: 40,
+              bottom: 15,
+              left: 100
+          };
+          var width = 250 - margin.left - margin.right,
+              height = 200 - margin.top - margin.bottom;
+          var svg = d3.select("#graphic").append("svg")
+              .attr("width", width + margin.left + margin.right)
+              .attr("height", height + margin.top + margin.bottom)
+              .append("g")
+              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+          var x = d3.scale.linear()
+              .range([0, width])
+              .domain([0, d3.max(data, function (d) {
+                  return d.value;
+              })]);
+          var y = d3.scale.ordinal()
+              .rangeRoundBands([height, 0], .1)
+              .domain(data.map(function (d) {
+                  return d.name;
+              }));
+  
+          //make y axis to show bar names
+          var yAxis = d3.svg.axis()
+              .scale(y)
+              //no tick marks
+              .tickSize(0)
+              .orient("left");
+  
+          var gy = svg.append("g")
+              .attr("class", "y axis")
+              .call(yAxis)
+
+          
+          /*
+          
+          bars.data(data).enter().append("g")
+          
+          */
+
+          var bars = svg.selectAll(".bar")
+              .data(data)
+              .enter()
+              .append("g");
+          
+              
+          //append rects
+          bars.append("rect")
+              .attr("class", "bar")
+              .attr("y", function (d) {
+                  return y(d.name);
+              })
+              .attr("height", y.rangeBand())
+              .attr("x", 0)
+              .attr("width", function (d) {
+                  return x(d.value);
+              });
+  
+          //add a value label to the right of each bar
+          bars.append("text")
+              .attr("class", "label")
+              //y position of the label is halfway down the bar
+              .attr("y", function (d) {
+                  return y(d.name) + y.rangeBand() / 2 + 4;
+              })
+              //x position is 3 pixels to the right of the bar
+              .attr("x", function (d) {
+                  return x(d.value) + 3;
+              })
+              .text(function (d) {
+                  return d.value;
+              });
+
+              d3.select('#graphic')
+              .selectAll('div')
+              .data(data)
+              .exit()
+              .remove();
+
+            }
+      </script>
+
+      <script>
+        function chartUpdater(cbm,kilos,sel){
+          console.log("Chart updater called!");
+          
+          var data_cbm = [{
+                  "name": "ake-hold",
+                  "value": cbm[0].toFixed(0),
+              },
+              {
+                  "name": "pmc-hold",
+                  "value": cbm[1].toFixed(0),
+              },
+              {
+                  "name": "bulk-hold",
+                  "value": cbm[2].toFixed(0),
+              },
+              {
+                  "name": "ake-passenger",
+                  "value": cbm[3].toFixed(0),
+              },
+              {
+                  "name": "pmc-passenger",
+                  "value": cbm[4].toFixed(0),
+              },
+              {
+                  "name": "bulk-passenger",
+                  "value": cbm[5].toFixed(0),
+              },
+              {
+                  "name": "ake-cargo",
+                  "value": cbm[6].toFixed(0),
+              },
+              {
+                  "name": "pmc-cargo",
+                  "value": cbm[7].toFixed(0),
+              },
+              {
+                  "name": "bulk-cargo",
+                  "value": cbm[8].toFixed(0),
+              },
+              ];
+
+              var data_kilos = [{
+                  "name": "ake-hold",
+                  "value": kilos[0].toFixed(0),
+              },
+              {
+                  "name": "pmc-hold",
+                  "value": kilos[1].toFixed(0),
+              },
+              {
+                  "name": "bulk-hold",
+                  "value": kilos[2].toFixed(0),
+              },
+              {
+                  "name": "ake-passenger",
+                  "value": kilos[3].toFixed(0),
+              },
+              {
+                  "name": "pmc-passenger",
+                  "value": kilos[4].toFixed(0),
+              },
+              {
+                  "name": "bulk-passenger",
+                  "value": kilos[5].toFixed(0),
+              },
+              {
+                  "name": "ake-cargo",
+                  "value": kilos[6].toFixed(0),
+              },
+              {
+                  "name": "pmc-cargo",
+                  "value": kilos[7].toFixed(0),
+              },
+              {
+                  "name": "bulk-cargo",
+                  "value": kilos[8].toFixed(0),
+              },
+              ];
+          
+              var d;
+
+              if (sel == "cbm"){
+                d = data_cbm
+              }else{
+                d = data_kilos
+              }
+          updateChart(d);
+
+        }
+
+      </script>
+
+      <script>
+
+        
+
+          $(document).ready(function() {
+          
+            var data1 = [{
+                  "name": "Cargo Capacity",
+                  "value": 30,
+              },
+              {
+                  "name": "Aircraft Capacity",
+                  "value": 10,
+              },
+              {
+                  "name": "PAX Utilization",
+                  "value": 10,
+              },
+              ];
+
+
+              updateChart(data1);
+          
+          
+          window.onbeforeunload = function() {
+              return "Dude, are you sure you want to leave? Think of the kittens!";
+          }
+          
+          
+          
+            function updateTripTable(data,aircraft,ake_cbm,ake_kgs,pmc_cbm,pmc_kgs) {
+              console.log("update triptablecalled")
+              console.log(data)
+              document.getElementById('trip_name').textContent = "Flight No - " + data[0];
+              document.getElementById('from').textContent = "Origin - " + data[1];
+              document.getElementById('to').textContent = "Destination - " + data[2];
+              document.getElementById('aircraft').textContent = "Equipment  - " + data[6];
+              document.getElementById('std').textContent = "STD  - " + data[4];
+              document.getElementById('sta').textContent = "STA   - " + data[5];
+              document.getElementById('freq').textContent = "Frequency   - " + data[7];
+              
+              document.getElementById('bclass').textContent = aircraft[0];
+              document.getElementById('eclass').textContent = aircraft[1];
+              document.getElementById('ptotal').textContent = aircraft[2];
+              //Standard Computations
+              /*
+                <td id="ake_std_units"></td>
+                <td id="ake_std_cbm"></td>
+                <td id="ake_std_kilos"></td>
+              */
+              // Standard Configuration
+              // ake computation
+              var ake_std_units = aircraft[3];
+              var ake_std_cbm = aircraft[3] * ake_cbm;
+              var ake_std_kilos = aircraft[3] * ake_kgs;
+              document.getElementById('ake_std_units').textContent = ake_std_units;
+              document.getElementById('ake_std_cbm').textContent = ake_std_cbm.toFixed(0);
+              document.getElementById('ake_std_kilos').textContent = ake_std_kilos;   
+
+              // pmc computation
+              var pmc_std_units = aircraft[4];
+              var pmc_std_cbm = aircraft[4] * pmc_cbm;
+              var pmc_std_kilos = aircraft[4] * pmc_kgs;
+              document.getElementById('pmc_std_units').textContent = pmc_std_units;
+              document.getElementById('pmc_std_cbm').textContent = pmc_std_cbm;
+              document.getElementById('pmc_std_kilos').textContent = pmc_std_kilos;   
+
+              // bulk computation
+
+              var bulk_std_units = 0;
+              var bulk_std_cbm =  0;
+              var bulk_std_kilos = aircraft[5];
+              document.getElementById('bulk_std_units').textContent = bulk_std_units;
+              document.getElementById('bulk_std_cbm').textContent = bulk_std_cbm;
+              document.getElementById('bulk_std_kilos').textContent = bulk_std_kilos;
+
+              // 100% Passenger Projected Configuration
+              // ake computation
+
+              var ake_p_units = aircraft[6];
+              var ake_p_cbm = aircraft[6] * ake_cbm;
+              var ake_p_kilos = aircraft[6] * ake_kgs;
+              document.getElementById('ake_p_units').textContent = ake_p_units;
+              document.getElementById('ake_p_cbm').textContent = ake_p_cbm;
+              document.getElementById('ake_p_kilos').textContent = ake_p_kilos; 
+
+              // pmc computation
+              var pmc_p_units = aircraft[7];
+              var pmc_p_cbm = aircraft[7] * pmc_cbm;
+              var pmc_p_kilos = aircraft[7] * pmc_kgs;
+              document.getElementById('pmc_p_units').textContent = pmc_p_units;
+              document.getElementById('pmc_p_cbm').textContent = pmc_p_cbm;
+              document.getElementById('pmc_p_kilos').textContent = pmc_p_kilos; 
+              
+               // bulk computation
+
+              var bulk_p_units = 0;
+              var bulk_p_cbm =  0;
+              var bulk_p_kilos = aircraft[8];
+              document.getElementById('bulk_p_units').textContent = bulk_p_units;
+              document.getElementById('bulk_p_cbm').textContent = bulk_p_cbm;
+              document.getElementById('bulk_p_kilos').textContent = bulk_p_kilos;
+
+              // Available Cargo Configuration
+              // ake computation
+              var ake_avl_units = aircraft[9];
+              var ake_avl_cbm = aircraft[9] * ake_cbm;
+              var ake_avl_kilos = aircraft[9] * ake_kgs;
+              document.getElementById('ake_avl_units').textContent = ake_avl_units;
+              document.getElementById('ake_avl_cbm').textContent = ake_avl_cbm;
+              document.getElementById('ake_avl_kilos').textContent = ake_avl_kilos;
+              document.getElementById('ake_avl_units2').textContent = ake_avl_units;
+              document.getElementById('ake_avl_cbm2').textContent = ake_avl_cbm;
+              document.getElementById('ake_avl_kilos2').textContent = ake_avl_kilos; 
+
+              // pmc computation
+              var pmc_avl_units = aircraft[10];
+              var pmc_avl_cbm = aircraft[10] * pmc_cbm;
+              var pmc_avl_kilos = aircraft[10] * pmc_kgs
+              document.getElementById('pmc_avl_units').textContent = pmc_avl_units;
+              document.getElementById('pmc_avl_cbm').textContent = pmc_avl_cbm;
+              document.getElementById('pmc_avl_kilos').textContent = pmc_avl_kilos;
+              document.getElementById('pmc_avl_units2').textContent = pmc_avl_units;
+              document.getElementById('pmc_avl_cbm2').textContent = pmc_avl_cbm;
+              document.getElementById('pmc_avl_kilos2').textContent = pmc_avl_kilos; 
+
+              var bulk_avl_units = 0;
+              var bulk_avl_cbm = 0 ;
+              var bulk_avl_kilos = aircraft[11] ;
+              document.getElementById('bulk_avl_units').textContent = bulk_avl_units;
+              document.getElementById('bulk_avl_cbm').textContent = bulk_avl_cbm;
+              document.getElementById('bulk_avl_kilos').textContent = bulk_avl_kilos;
+              document.getElementById('bulk_avl_units2').textContent = bulk_avl_units;
+              document.getElementById('bulk_avl_cbm2').textContent = bulk_avl_cbm;
+              document.getElementById('bulk_avl_kilos2').textContent = bulk_avl_kilos; 
+
+              //Total CBM, Units & Kgs
+
+              var total_cargo_units = bulk_avl_units + ake_avl_units + pmc_avl_units
+              var total_cargo_kgs = bulk_avl_kilos + ake_avl_kilos + pmc_avl_kilos
+              var total_cargo_cbm = bulk_avl_cbm + ake_avl_cbm + pmc_avl_cbm
+              document.getElementById('total_cargo_units').textContent = total_cargo_units;
+              document.getElementById('total_cargo_kgs').textContent = total_cargo_kgs;
+              document.getElementById('total_cargo_cbm').textContent = total_cargo_cbm;
+
+              document.getElementById('total_cargo_units2').textContent = total_cargo_units;
+              document.getElementById('total_cargo_kgs2').textContent = total_cargo_kgs;
+              document.getElementById('total_cargo_cbm2').textContent = total_cargo_cbm;
+              document.getElementById('no_show_cbm2').textContent = (total_cargo_cbm * .1).toFixed(1);
+              document.getElementById('no_show_kgs2').textContent = (total_cargo_kgs * .1).toFixed(1);
+              document.getElementById('overbooking_cbm2').textContent = (total_cargo_cbm * .1).toFixed(1);
+              document.getElementById('overbooking_kgs2').textContent = (total_cargo_kgs * .1).toFixed(1);
+              
+              //console.log(total_ake_cbm,total_ake_kgs,total_pmc_cbm,total_pmc_kgs);
+              //console.log(data1);
+
+              var cbm =[ake_std_cbm,pmc_std_cbm,bulk_std_cbm,ake_p_cbm,pmc_p_cbm,bulk_p_cbm,ake_avl_cbm,pmc_avl_cbm,bulk_avl_cbm];
+              var kilos = [ake_std_kilos,pmc_std_kilos,bulk_std_kilos,ake_p_kilos,pmc_p_kilos,bulk_p_kilos,ake_avl_kilos,pmc_avl_kilos,bulk_avl_kilos]
+
+
+              chartUpdater(cbm,kilos,"cbm");
+              
+
+
+              
+              // For Kilos and CBM
+              // AKE - Hold, AKE - Passenger , AKE - Cargo
+              // PMC - Hold, PMC - Passenger , PMC - Cargo
+              // BULK - Hold, Bulk - Passenger , Bulk - Cargo
+
+
+              //$("#aircraftnum") = aircraftnum;
+              //$("#std") = STD;
+              //$("#sta") = STA;
+              //$("#freq") = freq;
+                
+            }
+
+
+            $("div.controls a").click(function(){
+                var $elemId = $(this).attr("id");
+                
+                $.ajax({
+                        data : JSON.stringify( { "name": $elemId } ),
+                        type : 'POST',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        url : '/api/getFlightDetails/'
+                    })
+                    .done(function(data) {
+
+                        if (data.error) {
+                            console.log(data.error)
+                        }
+                        else {
+                            console.log("excellent");
+                            
+                            updateTripTable(data.data, data.aircraft, data.ake_cbm,data.ake_kgs,data.pmc_cbm,data.pmc_kgs);
+                            
+                        }
+                        
+
+                    });
+
+
+            });
+
+
+          });
+          
+        </script>
+        
+
+        <script>
+
+
+            
+
+            
+            function runcounter2(count){
+
+              
+              passenger_count = 0;
+              p_weight = 0;
+              p_volume = 0;
+
+              cargo_count = 0;
+              c_weight = 0;
+              c_volume = 0;
+
+              k = 1;
+              j = 1;
+              counter = 0;
+              setInterval(function(){ 
+                  console.log("Hi there!");
+                  var txt1 = $("#logger1");
+                  var txt2 = $("#logger2");
+                  items = [1.25,1.2,1,.75,.33,.4,.5,1,2,2.5]
+                  cargo_length = [10,20,30,40,80,100,120,110,101,102,133,128]
+                  cargo_width = [10,20,30,40,80,100,120,110,101,102,133,128]
+                  cargo_height = [10,20,30,40,80,100,120,110,101,102,133,128]
+                  cargo_kilos = [10,20,30,40,11,12,15,18,10,20,13,13.5,12,12]
+                  
+                  if(k % 2 === 0){
+                    counter = counter + 1;
+                    passenger_count = passenger_count + 1;
+                    cargo_count = cargo_count + 1;
+
+                    var currentDate = new Date();
+                    var item = items[Math.floor(Math.random() * items.length)]
+                    var l = cargo_length[Math.floor(Math.random() * cargo_length.length)]
+                    var b = cargo_width[Math.floor(Math.random() * cargo_width.length)]
+                    var h = cargo_height[Math.floor(Math.random() * cargo_height.length)]
+                    var volume = ((l/100) * (b/100) * (h/100)).toFixed(2);
+                    var weight = cargo_kilos[Math.floor(Math.random() * cargo_kilos.length)]
+
+                    p_weight = p_weight + item*18;
+                    c_volume = c_volume + volume;
+                    c_weight = c_weight + weight;
+
+
+
+                    txt1.text(  "Person " + counter + " Loaded -  Passenger baggage" + item + "Kg");
+                    txt2.text(  "Cargo " + counter + " Loaded -"+"Vol" + volume + " Cubic Metres " + "Dims"+ l + "cm" + "X" + b + "cm" + h + "cm" + weight*18 + " - Kilos" );
+                    
+                    var data = [{
+                            "name": "Cargo Capacity",
+                            "value": 26000,
+                    },
+                        {
+                            "name": "Aircraft Capacity",
+                            "value": 40500,
+                        },
+                        {
+                            "name": "PAX Utilization",
+                            "value": 8560,
+                            
+                        },
+                        {
+                          "name":"Cargo Weight",
+                          "value": c_weight.toFixed(2),
+
+                        },
+                        {
+                          "name":"Passenger Bag Weight",
+                          "value": p_weight.toFixed(2),
+
+                        },
+                        
+
+                        ];
+
+                        updateChart(data);
+                        console.log(data);
+
+
+
+                  }
+                  k = k + 1;
+                  j = j + 1;
+                 }, 250);
+            }
+        </script>
+        <script>
+
+          function simulate(){
+
+            runcounter2();
+
+          }
+
+
+        </script>
+          <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+          <link rel="stylesheet" href="/resources/demos/style.css">
+          <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        
+        <script>
+          $( function() {
+          $( "#tabs" ).tabs();
+          } );
+        </script>
+
+    </body>
+
+</html>

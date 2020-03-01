@@ -56,74 +56,92 @@ tr:nth-child(even) {
                   font-size: 13px;
               }
           </style>
-
+          
         <div id="wrapper">
 
             <div class="container-fluid">
     
               <div class="card mt-3 mb-0">
                   <div class="card-body">
-                      <button class="btn btn-info position-fixed" style="z-index: 99">
+                      <!--button class="btn btn-info position-fixed" style="z-index: 99">
                         <i class="fa fa-bars" aria-hidden="true"></i>
-                      </button>
-                      <div class="row">
-                        <div class="col-9 d-flex">
-                          <div style=" height: 250px; width: 200px; padding-top: 50px; padding-left: 20px; overflow-y: auto;">
-                            <h6 style="margin-left: 20px;">Flight Details</h6>
-                            <ol type="A">
-                              <li id="trip_name"></li>
-                              <li id="from"></li>
-                              <li id="to"></li>
-                              <li id="aircraft"></li>
-                              <li id="sta"></li>
-                              <li id="std"></li>
-                              <li id="freq"></li>
-                            </ol> 
+                      </button-->
+                      <div id="tabs">
+                        <ul>
+                          <li><a href="#tabs-1">Avl-CAP</a></li>
+                          <li><a href="#tabs-2">Target-REV</a></li>
+                          <li><a href="#tabs-3">Simulation</a></li>
+                        </ul>
+                        <div id="tabs-1">
+                          <div class="row">
+                            <div class="col-9 d-flex">
+                              <div style=" height: 250px; width: 200px; padding-top: 50px; padding-left: 20px; overflow-y: auto;">
+                                <h6 style="margin-left: 20px;">Flight Details</h6>
+                                <ol type="A">
+                                  <li id="trip_name"></li>
+                                  <li id="from"></li>
+                                  <li id="to"></li>
+                                  <li id="aircraft"></li>
+                                  <li id="sta"></li>
+                                  <li id="std"></li>
+                                  <li id="freq"></li>
+                                </ol> 
+                              </div>
+                              <div  style="height: 250px; width: 200px;padding-top: 50px;">
+                                <h6 style="margin-left: 20px;">Aircraft Standards</h6>
+                                <ol type="A">
+                                  <li id="bclass"></li>
+                                  <li id="eclass"></li>
+                                  <li id="ptotal"></li>
+                                  <li id="ake_std"></li>
+                                  <li id="pmc_std"></li>
+                                  <li id="bulk_std"></li>
+                                </ol> 
+                              </div>
+                              <div style="height: 250px; width: 200px;padding-top: 50px;">
+                                <h6 style="margin-left: 20px;">Projected Passenger Load @ 100%</h6>
+                                <ol type="A">
+                                  <li id="ake_proj"></li>
+                                  <li id="pmc_proj"></li>
+                                  <li id="bulk_proj"></li>
+                                </ol>
+                                <h6 style="margin-left: 20px;">Cargo Capacity</h6>
+                                <ol type="A">
+                                  <li id="ake_avl"></li>
+                                  <li id="pmc_avl"></li>
+                                  <li id="bulk_avl"></li>
+                                </ol>
+                              </div>
+                              <div style="height: 300px; width: 250px;padding-top: 50px;">
+                                <h6 style="margin-left: 20px;">AKE-PMC-BULK Target</h6>
+                                <ol type="A">
+                                  <li id="final_ake_cbm"></li>
+                                  <li id="final_ake_kgs"></li>
+                                  <li id="final_pmc_cbm"></li>
+                                  <li id="final_pmc_kgs"></li>
+                                  <li id="final_bulk_kgs"></li>
+                                </ol>
+                                <h6 id="total_in_kgs"></h6>
+                                <h6 id="total_in_cbm"></h6>
+                                 
+                              </div>
+                            </div>
+                            <div class="col-3 d-flex" id="graphicholder">
+                              <div id="graphic" style="margin-top: 50px;"></div>
+    
+                            </div>
                           </div>
-                          <div  style="height: 250px; width: 200px;padding-top: 50px;">
-                            <h6 style="margin-left: 20px;">Aircraft Standards</h6>
-                            <ol type="A">
-                              <li id="bclass"></li>
-                              <li id="eclass"></li>
-                              <li id="ptotal"></li>
-                              <li id="ake_std"></li>
-                              <li id="pmc_std"></li>
-                              <li id="bulk_std"></li>
-                            </ol> 
-                          </div>
-                          <div style="height: 250px; width: 200px;padding-top: 50px;">
-                            <h6 style="margin-left: 20px;">Projected Passenger Load @ 100%</h6>
-                            <ol type="A">
-                              <li id="ake_proj"></li>
-                              <li id="pmc_proj"></li>
-                              <li id="bulk_proj"></li>
-                            </ol>
-                            <h6 style="margin-left: 20px;">Cargo Capacity</h6>
-                            <ol type="A">
-                              <li id="ake_avl"></li>
-                              <li id="pmc_avl"></li>
-                              <li id="bulk_avl"></li>
-                            </ol>
-                          </div>
-                          <div style="height: 300px; width: 250px;padding-top: 50px;">
-                            <h6 style="margin-left: 20px;">AKE-PMC-BULK Target</h6>
-                            <ol type="A">
-                              <li id="final_ake_cbm"></li>
-                              <li id="final_ake_kgs"></li>
-                              <li id="final_pmc_cbm"></li>
-                              <li id="final_pmc_kgs"></li>
-                              <li id="final_bulk_kgs"></li>
-                            </ol>
-                            <h6 id="total_in_kgs"></h6>
-                            <h6 id="total_in_cbm"></h6>
-                             
-                          </div>
+                        
                         </div>
-                        <div class="col-3 d-flex">
-                          <div id="graphic" style="margin-top: 50px;"></div>
+                        <div id="tabs-2">
+                        </div>
+                        <div id="tabs-3">
+                        </div>
 
-                        </div>
+
                       </div>
+                      
+                      
                   </div>
               </div>
 
@@ -133,14 +151,16 @@ tr:nth-child(even) {
                         <a href="#" id="{{item.name}}" class="btn btn-link">{{ item.name }} </a>
                             
                         {% endfor %}
-                        <button onclick="simulate()">Simulate</button>
+                        <button onclick="simulate(0)">Simulate</button>
+                        <button onclick="pause()">Pause</button>
                   </div>
               </div>
               
               <div class="card mt-3 mb-0">
                 <div class="card-body">
                   <div class="form-group">
-                      <textarea class="form-control" rows="4"></textarea>
+                      <p id="logger1"></p>
+                      <p id="logger2"></p>
                     </div>
                 </div>
               </div>
@@ -161,18 +181,14 @@ tr:nth-child(even) {
 
         <script>
 
-        function updateChart(){
+        function updateChart(d){
 
-           
-          var data = [{
-                  "name": "Target Kilos",
-                  "value": 20,
-          },
-              {
-                  "name": "Actual Kilos",
-                  "value": 12,
-          },
-              ];
+          var data = d;
+          
+          $( "#graphic" ).remove();
+
+          $("#graphicholder").append('<div id="graphic" style="margin-top: 50px;"></div>');
+
   
           //sort bars based on value
           data = data.sort(function (a, b) {
@@ -182,12 +198,12 @@ tr:nth-child(even) {
           //set up svg using margin conventions - we'll need plenty of room on the left for labels
           var margin = {
               top: 15,
-              right: 25,
+              right: 40,
               bottom: 15,
               left: 100
           };
           var width = 250 - margin.left - margin.right,
-              height = 80 - margin.top - margin.bottom;
+              height = 200 - margin.top - margin.bottom;
           var svg = d3.select("#graphic").append("svg")
               .attr("width", width + margin.left + margin.right)
               .attr("height", height + margin.top + margin.bottom)
@@ -214,12 +230,20 @@ tr:nth-child(even) {
           var gy = svg.append("g")
               .attr("class", "y axis")
               .call(yAxis)
-  
+
+          
+          /*
+          
+          bars.data(data).enter().append("g")
+          
+          */
+
           var bars = svg.selectAll(".bar")
               .data(data)
               .enter()
-              .append("g")
-  
+              .append("g");
+          
+              
           //append rects
           bars.append("rect")
               .attr("class", "bar")
@@ -246,14 +270,15 @@ tr:nth-child(even) {
               .text(function (d) {
                   return d.value;
               });
+
+              d3.select('#graphic')
+              .selectAll('div')
+              .data(data)
+              .exit()
+              .remove();
+
             }
       </script>
-      <script type="text/javascript" charset="utf-8">
-         
-      </script>
-      
-      
-     
       <script>
 
         
@@ -268,8 +293,22 @@ tr:nth-child(even) {
           console.log(msg);
           });
           
+          var data = [{
+                  "name": "Cargo Capacity",
+                  "value": 26000,
+          },
+              {
+                  "name": "Aircraft Capacity",
+                  "value": 40500,
+              },
+              {
+                  "name": "PAX Utilization",
+                  "value": 8560,
+              },
+              ];
 
-            updateChart();
+
+            updateChart(data);
 
             function updateTripTable(data,aircraft,ake_cbm,ake_kgs,pmc_cbm,pmc_kgs) {
               console.log("update triptablecalled")
@@ -282,7 +321,7 @@ tr:nth-child(even) {
               document.getElementById('sta').textContent = "STA   - " + data[5];
               document.getElementById('freq').textContent = "Frequency   - " + data[7];
               
-              document.getElementById('bclass').textContent = "Business Class - " + aircraft[0];
+              document.getElementById('bclass').textContent = "First Class - " + aircraft[0];
               document.getElementById('eclass').textContent = "Economy Class - " + aircraft[1];
               document.getElementById('ptotal').textContent = "Passenger Total - " + aircraft[2];
               document.getElementById('ake_std').textContent = "AKE- Standard  - " + aircraft[6];
@@ -353,6 +392,117 @@ tr:nth-child(even) {
           });
           
         </script>
+
+        <script>
+
+
+            
+
+            
+            function runcounter2(count){
+
+              
+              passenger_count = 0;
+              p_weight = 0;
+              p_volume = 0;
+
+              cargo_count = 0;
+              c_weight = 0;
+              c_volume = 0;
+
+              k = 1;
+              j = 1;
+              counter = 0;
+              setInterval(function(){ 
+                  console.log("Hi there!");
+                  var txt1 = $("#logger1");
+                  var txt2 = $("#logger2");
+                  items = [1.25,1.2,1,.75,.33,.4,.5,1,2,2.5]
+                  cargo_length = [10,20,30,40,80,100,120,110,101,102,133,128]
+                  cargo_width = [10,20,30,40,80,100,120,110,101,102,133,128]
+                  cargo_height = [10,20,30,40,80,100,120,110,101,102,133,128]
+                  cargo_kilos = [10,20,30,40,11,12,15,18,10,20,13,13.5,12,12]
+                  
+                  if(k % 2 === 0){
+                    counter = counter + 1;
+                    passenger_count = passenger_count + 1;
+                    cargo_count = cargo_count + 1;
+
+                    var currentDate = new Date();
+                    var item = items[Math.floor(Math.random() * items.length)]
+                    var l = cargo_length[Math.floor(Math.random() * cargo_length.length)]
+                    var b = cargo_width[Math.floor(Math.random() * cargo_width.length)]
+                    var h = cargo_height[Math.floor(Math.random() * cargo_height.length)]
+                    var volume = ((l/100) * (b/100) * (h/100)).toFixed(2);
+                    var weight = cargo_kilos[Math.floor(Math.random() * cargo_kilos.length)]
+
+                    p_weight = p_weight + item*18;
+                    c_volume = c_volume + volume;
+                    c_weight = c_weight + weight;
+
+
+
+                    txt1.text(  "Person " + counter + " Loaded -  Passenger baggage" + item + "Kg");
+                    txt2.text(  "Cargo " + counter + " Loaded -"+"Vol" + volume + " Cubic Metres " + "Dims"+ l + "cm" + "X" + b + "cm" + h + "cm" + weight*18 + " - Kilos" );
+                    
+                    var data = [{
+                            "name": "Cargo Capacity",
+                            "value": 26000,
+                    },
+                        {
+                            "name": "Aircraft Capacity",
+                            "value": 40500,
+                        },
+                        {
+                            "name": "PAX Utilization",
+                            "value": 8560,
+                            
+                        },
+                        {
+                          "name":"Cargo Weight",
+                          "value": c_weight.toFixed(2),
+
+                        },
+                        {
+                          "name":"Passenger Bag Weight",
+                          "value": p_weight.toFixed(2),
+
+                        },
+                        
+
+                        ];
+
+                        updateChart(data);
+                        console.log(data);
+
+
+
+                  }
+                  k = k + 1;
+                  j = j + 1;
+                 }, 250);
+            }
+        </script>
+        <script>
+
+          function simulate(){
+
+            runcounter2();
+
+          }
+
+
+        </script>
+          <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+          <link rel="stylesheet" href="/resources/demos/style.css">
+          <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        
+        <script>
+          $( function() {
+          $( "#tabs" ).tabs();
+          } );
+        </script>
+
     </body>
 
 </html>

@@ -2,10 +2,8 @@ from flask import Flask, url_for, render_template, request, Response,jsonify
 from flask_socketio import SocketIO, send
 from flask_cors import CORS
 
-
 app = Flask(__name__, static_folder="static", template_folder="templates")
 app.config['SECRET_KEY'] = 'mysecretkey'
-socketio = SocketIO(app)
 CORS(app)
 
 
@@ -64,7 +62,7 @@ schedule5 = {
     "name" : "WY005",
     "from" : "MCT",
     "to"   : "COK",
-    "a/c" : 737,
+    "a/c" : 787,
     "STD" : "0200",
     "STA" : "0715",
     "anum": 3,
@@ -96,7 +94,7 @@ schedule8 = {
     "name" : "WY008",
     "from" : "BOM",
     "to"   : "MCT",
-    "a/c" : 737,
+    "a/c" : 330,
     "STD" : "2000",
     "STA" : "2130",
     "anum": 3,
@@ -120,7 +118,7 @@ ar787 = {}
 ar737 = {}
 ar330 = {}
 
-ar787["bclass"] = 30
+ar787["bclass"] = 31
 ar787["eclass"] = 258
 ar787["ptotal"] = 288
 ar787["ake_std"] = 14
@@ -147,7 +145,7 @@ ar330["pmc_proj"] = 0
 ar330["bulk_proj"] = 1000
 ar330["ake_avl"] = 4
 ar330["pmc_avl"] = 4
-ar330["bulk_avl"] = 2000
+ar330["bulk_avl"] = 2500
 
 
 ar737["bclass"] = 12
@@ -166,7 +164,7 @@ ar737["bulk_avl"] = 4000
 ake_cbm = 4.3
 ake_kgs = 1500
 pmc_cbm = 9.5
-pmc_kgs = 4800
+pmc_kgs = 4000
 bulk_cbm = 44
 bulk_kgs = 7500
 
@@ -175,6 +173,10 @@ bulk_kgs = 7500
 @app.route("/")
 def index():
    return render_template("index.html", sectors=sectors)
+
+@app.route("/attempt/1")
+def attempt():
+   return render_template("attempt1.html", sectors=sectors)
 
 @app.route('/api/getFlightDetails/', methods=['POST'])
 def api_getFlightDetails():
@@ -245,14 +247,12 @@ def api_getFlightDetails():
     resp.status_code = 200
     return resp
 
-@socketio.on('message')
+'''@socketio.on('message')
 def handle_message(message):
     print('received message: ' + message)
     send(message)
-
-
-
+'''
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
-#   app.run(debug = True)
+#    socketio.run(app, debug=True)
+    app.run(debug = True)
