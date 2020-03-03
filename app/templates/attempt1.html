@@ -35,7 +35,12 @@ tr:nth-child(even) {
         </style>
             <style>
               
-              
+              .bar.left {
+                fill: #5f89ad;
+              }
+              .bar.right {
+                fill: #a7c6e0;
+              }
               .bar {
                   fill: #5f89ad;
               }
@@ -68,7 +73,9 @@ tr:nth-child(even) {
                         <ul>
                           <li><a href="#tabs-1">Avl-CAP</a></li>
                           <li><a href="#tabs-2">Target-REV</a></li>
-                          <li><a href="#tabs-3">Simulation</a></li>
+                          <li><a href="#tabs-3">What-If</a></li>
+                          <li><a href="#tabs-4">Simulation</a></li>
+                          <li><a href="#tabs-5">Reports</a></li>
                         </ul>
                         <div id="tabs-1">
                           <div class="row" style="padding-bottom: 10px; margin-top: 0px;">
@@ -223,15 +230,11 @@ tr:nth-child(even) {
                         
                         </div>
                         <div id="tabs-2">
-                          <div class="row" style="padding-bottom: 10px; margin-top: 0px;">
-                            <div class="col-9 d-flex">
-                              
-                              <div style="height: 265px; width: 300px; padding-left: 35px;">
-                                                              
-                                
-                                <h6 style="margin-left: 20px;font-weight:bold;">Target Capacity Utilisation
+                          <div class="row">
+                            <div class="col-4">
+                                <h6 style="font-weight:bold;">Target Capacity Utilisation
                                 </h6>
-                                <table style="width: 300px;margin-left: 25px;">
+                                <table class="w-100" style="max-width: 320px;">
                                   <tr style="line-height: .80em;">
                                     <td>Type</td>
                                     <td>Units</td>
@@ -274,13 +277,36 @@ tr:nth-child(even) {
                                     <td id="overbooking_cbm2"></td>
                                     <td id="overbooking_kgs2"></td>
                                   </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td style="font-weight: bold;">Total Default Capacity</td>
+                                    <td style="font-weight: bold;"id="tdc_units"></td>
+                                    <td style="font-weight: bold;"id="tdc_cbm2"></td>
+                                    <td style="font-weight: bold;"id="tdc_kgs2"></td>
+                                  </tr>
+                                </table>
+                            </div>
+
+                            <div class="col-8">
+                              <div class="row">
+                                <div class="ml-4">
+                                <h6 style="font-weight:bold;">Simulated
+                                </h6>
+                                <table class="w-100" style="max-width: 320px;">
+                                  <tr style="line-height: .80em;">
+                                    <td>Taget Yield/kg USD</td>
+                                    <td>Target Cargo Revenue</td>
+                                  </tr>
+                                  <tr style="line-height: .50em;">
+                                    <td id="target_yield"><input type="text" value="1"></td>
+                                    <td id="target_revenue"><input type="text"></td>
+                                  </tr>
                                 </table>
                               </div>
+                             </div>
                             </div>
-                            <style>
-                              
 
-                            </style>
+
+                            
                             <div class="col-3 d-flex" id="graphicholder">
                               <div id="graphic" style="margin-top: 10px;">
                               </div>
@@ -289,7 +315,331 @@ tr:nth-child(even) {
                             </div>
                           </div>
                         </div>
+                          
+
                         <div id="tabs-3">
+                          <div class="row">
+                            <div class="col-3">
+                              <h6 style="font-weight:bold;">Target Capacity Utilisation
+                              </h6>
+                              <table class="w-100" style="max-width: 320px;">
+                                <tr style="line-height: .80em;">
+                                  <td>Type</td>
+                                  <td>Units</td>
+                                  <td>CBM</td>
+                                  <td>Kilos</td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td>AKE</td>
+                                  <td id="ake_avl_units2"></td>
+                                  <td id="ake_avl_cbm2"></td>
+                                  <td id="ake_avl_kilos2"></td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td>PMC</td>
+                                  <td id="pmc_avl_units2"></td>
+                                  <td id="pmc_avl_cbm2"></td>
+                                  <td id="pmc_avl_kilos2"></td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td>BULK</td>
+                                  <td id="bulk_avl_units2"></td>
+                                  <td id="bulk_avl_cbm2"></td>
+                                  <td id="bulk_avl_kilos2"></td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td>Total</td>
+                                  <td id="total_cargo_units2"></td>
+                                  <td id="total_cargo_cbm2"></td>
+                                  <td id="total_cargo_kgs2"></td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td>No-show at 10%</td>
+                                  <td id="no_show_units"></td>
+                                  <td id="no_show_cbm2"></td>
+                                  <td id="no_show_kgs2"></td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td>Overbooking at 10%</td>
+                                  <td id="overbooking_units2"></td>
+                                  <td id="overbooking_cbm2"></td>
+                                  <td id="overbooking_kgs2"></td>
+                                </tr>
+                                <tr>
+                                  <td style="font-weight: bold;">Total Default Capacity</td>
+                                  <td style="font-weight: bold;"id="tdc_units"></td>
+                                  <td style="font-weight: bold;"id="tdc_cbm2"></td>
+                                  <td style="font-weight: bold;"id="tdc_kgs2"></td>
+                                </tr>
+                              </table>
+                            </div>
+                            <div class="col-3">
+                              <h6 style="font-weight:bold;">Simulated Values
+                              </h6>
+                              <table class="w-100" style="max-width: 320px;">
+                                <tr style="line-height: .80em;">
+                                  <td>Type</td>
+                                  <td>Units</td>
+                                  <td>CBM</td>
+                                  <td>Kilos</td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td><a href="#" data-toggle="modal" data-target=".bd-data-modal-ake">AKE</a></td>
+                                  <td id="ake_avl_units2"></td>
+                                  <td id="ake_avl_cbm2"></td>
+                                  <td id="ake_avl_kilos2"></td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td><a href="#" data-toggle="modal" data-target=".bd-data-modal-pmc">PMC</a></td>
+                                  <td id="pmc_avl_units2"></td>
+                                  <td id="pmc_avl_cbm2"></td>
+                                  <td id="pmc_avl_kilos2"></td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td><a href="#" data-toggle="modal" data-target=".bd-data-modal-bulk">BULK</a></td>
+                                  <td id="bulk_avl_units2"></td>
+                                  <td id="bulk_avl_cbm2"></td>
+                                  <td id="bulk_avl_kilos2"></td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td style="cursor: pointer;" onclick="alert('Computed field')">Total</td>
+                                  <td id="total_cargo_units2"></td>
+                                  <td id="total_cargo_cbm2"></td>
+                                  <td id="total_cargo_kgs2"></td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td>No-show at 10%</td>
+                                  <td id="no_show_units"></td>
+                                  <td id="no_show_cbm2"></td>
+                                  <td id="no_show_kgs2"></td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td>Overbooking at 10%</td>
+                                  <td id="overbooking_units2"></td>
+                                  <td id="overbooking_cbm2"></td>
+                                  <td id="overbooking_kgs2"></td>
+                                </tr>
+                                <tr>
+                                  <td style="font-weight: bold;">Total Default Capacity</td>
+                                  <td style="font-weight: bold;"id="tdc_units"></td>
+                                  <td style="font-weight: bold;"id="tdc_cbm2"></td>
+                                  <td style="font-weight: bold;"id="tdc_kgs2"></td>
+                                </tr>
+                              </table>
+                            </div>
+
+
+                            <div class="col-2">
+                                  <div>
+                                  <h6 style="font-weight:bold;">Revenue
+                                  </h6>
+                                  <table class="w-100">
+                                    <tr style="line-height: .80em;">
+                                      <td style="line-height: 17px;">Taget Yield/kg USD</td>
+                                      <td style="line-height: 17px;">Target Cargo Revenue</td>
+                                    </tr>
+                                    <tr style="line-height: .50em;">
+                                      <td id="target_yield"><input class="w-100" type="text" value="1" disabled="disabled"></td>
+                                      <td id="target_revenue"><input class="w-100" type="text" disabled="disabled"></td>
+                                    </tr>
+                                  </table>
+                                  </div>
+                                  <div class="mt-3">
+                                  <h6 style="font-weight:bold;">Simulated
+                                  </h6>
+                                  <table class="w-100">
+                                    <tr style="line-height: .80em;">
+                                      <td style="line-height: 17px;">Taget Yield/kg USD</td>
+                                      <td style="line-height: 17px;">Target Cargo Revenue</td>
+                                    </tr>
+                                    <tr style="line-height: .50em;">
+                                      <td id="target_yield"><input class="w-100" type="text" value="1"></td>
+                                      <td id="target_revenue"><input class="w-100" type="text"></td>
+                                    </tr>
+                                  </table>
+                                </div>
+                               </div>
+                              
+                               <div class="col-4">
+                                 <div class="row">
+                                   <div class="col-6">
+                                     <div class="piecharts" id="tab3chart1"></div>
+                                   </div>
+                                   <div class="col-6">
+                                    <div class="piecharts" id="tab3chart2"></div>
+                                  </div>
+                                 </div>
+                                 <div class="row">
+                                  <div class="col-6">
+                                    <div class="piecharts" id="tab3chart3"></div>
+                                  </div>
+                                  <div class="col-6">
+                                   <div class="piecharts" id="tab3chart4"></div>
+                                 </div>
+                                </div>
+                               </div>
+
+
+                          </div>
+
+
+                        </div>
+                        <div id="tabs-4">
+                          
+                          <div>
+                          <div class="row">
+                            <div class="col-2 h-100">
+                              <div class="mt-4" style="border-radius: 50%; overflow: hidden; width: 132px; height: 132px;  margin: auto;">
+                              <canvas id="clockcanvas" width="140" height="140" class="d-table m-auto" style="    margin-top: -4px !important;
+                              margin-left: -4px !important;"></canvas>
+                            </div>
+                              <h4 class="text-center">D1 | 0750</h4>
+                              <h4 class="text-center">WY008</h4>
+                              <button class="btn d-table m-auto py-0" id="playpouseBtn" style="font-size: 3rem;box-shadow: none;">
+                                <i class="fa fa-play-circle" aria-hidden="true"></i>
+                                <i class="fa fa-pause-circle d-none" aria-hidden="true"></i>
+                            </button>
+                            </div>
+                            <div class="col-3 h-100">
+                              <h6 style="font-weight:bold;">Target Capacity Utilisation
+                              </h6>
+                              <table class="w-100" style="max-width: 320px;">
+                                <tbody><tr style="line-height: .80em;">
+                                  <td>Type</td>
+                                  <td>Units</td>
+                                  <td>CBM</td>
+                                  <td>Kilos</td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td>AKE</td>
+                                  <td id="ake_avl_units2"></td>
+                                  <td id="ake_avl_cbm2"></td>
+                                  <td id="ake_avl_kilos2"></td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td>PMC</td>
+                                  <td id="pmc_avl_units2"></td>
+                                  <td id="pmc_avl_cbm2"></td>
+                                  <td id="pmc_avl_kilos2"></td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td>BULK</td>
+                                  <td id="bulk_avl_units2"></td>
+                                  <td id="bulk_avl_cbm2"></td>
+                                  <td id="bulk_avl_kilos2"></td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td>Total</td>
+                                  <td id="total_cargo_units2"></td>
+                                  <td id="total_cargo_cbm2"></td>
+                                  <td id="total_cargo_kgs2"></td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td>No-show at 10%</td>
+                                  <td id="no_show_units"></td>
+                                  <td id="no_show_cbm2"></td>
+                                  <td id="no_show_kgs2"></td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td>Overbooking at 10%</td>
+                                  <td id="overbooking_units2"></td>
+                                  <td id="overbooking_cbm2"></td>
+                                  <td id="overbooking_kgs2"></td>
+                                </tr>
+                                <tr>
+                                  <td style="font-weight: bold;">Total Default Capacity</td>
+                                  <td style="font-weight: bold;" id="tdc_units"></td>
+                                  <td style="font-weight: bold;" id="tdc_cbm2"></td>
+                                  <td style="font-weight: bold;" id="tdc_kgs2"></td>
+                                </tr>
+                              </tbody></table>
+                            </div>
+                            <div class="col-2 h-100">
+                              <h6 style="font-weight:bold;">&nbsp;</h6>
+                              <table class="w-100" style="max-width: 320px;">
+                                <tbody><tr style="line-height: .80em;">
+                                  <td>Categories(AWB)</td>
+                                  <td>Count</td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td>Mail</td>
+                                  <td>-</td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td>Dead body</td>
+                                  <td>-</td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td>Animals</td>
+                                  <td>-</td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td></td>
+                                  <td>-</td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td></td>
+                                  <td>-</td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td></td>
+                                  <td>-</td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td></td>
+                                  <td>-</td>
+                                </tr>
+                                
+                                <tr style="line-height: .50em;">
+                                  <td></td>
+                                  <td>-</td>
+                                </tr>
+                                
+                              </tbody></table>
+                            </div>
+
+
+                                <div class="col-1 pr-0 h-100">
+                                  <h6 class="text-center" style="font-weight: 600;">CBM</h6>
+                                  <svg height="200" class="chartT41" width="100"></svg>
+                               </div>
+                               <div class="col-1 pr-0 h-100">
+                                <h6 class="text-center" style="font-weight: 600;">KGS</h6>
+                                <svg height="200" class="chartT42" width="100"></svg>
+                              </div>
+                              
+                               <div class="col-3 h-100">
+                                <h6 class="text-center" style="font-weight: 600;">Revenue</h6>
+                                <svg height="300" class="chartT43 pl-5" width="250"></svg>
+                               </div>
+
+                              </div>
+                            </div>
+
+                            <div>
+                              <table class="w-100">
+                                <tbody><tr style="line-height: .80em;" class="">
+                                  <td class="border-0">Flight No.</td>
+                                  <td class="border-0">Origin</td>
+                                  <td class="border-0">Dest</td>
+                                  <td class="border-0">Actual CBM/KGS</td>
+                                  <td class="border-0">Actual Yield</td>
+                                  <td class="border-0">Actual Revenue USD</td>
+                                  <td class="border-0">Remarks</td>
+                                </tr>
+                                <tr style="line-height: .50em;">
+                                  <td>WY008</td>
+                                  <td>MCT</td>
+                                  <td>BKK</td>
+                                  <td>13/3500</td>
+                                  <td>1.1</td>
+                                  <td>3500 USD</td>
+                                  <td>Allotment for contract rates</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            </div>
+
                         </div>
 
 
@@ -326,13 +676,566 @@ tr:nth-child(even) {
 
         <!-- jQuery  -->
 
-        <script src="/static/assets/js/jquery.min.js"></script>
-        <script src="/static/assets/js/bootstrap.bundle.min.js"></script>
-        <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-       
+        <div class="modal fade bd-data-modal-ake" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-md">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title mt-0" style="font-size: 1rem;">AKE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <ul class="row list-unstyled">
+                    <li class="col-4">Units</li>
+                    <li class="col-4">CBM</li>
+                    <li class="col-4">Kilos</li>
+                  </ul>
+                  <ul class="row list-unstyled mb-2">
+                    <li class="col-4"><input type="number" class="w-100" disabled="disabled"></li>
+                    <li class="col-4"><input type="number" class="w-100" disabled="disabled"></li>
+                    <li class="col-4"><input type="number" class="w-100" disabled="disabled"></li>
+                  </ul>
+                  <ul class="row list-unstyled">
+                    <li class="col-4"><input type="number" class="w-100"></li>
+                    <li class="col-4"><input type="number" class="w-100"></li>
+                    <li class="col-4"><input type="number" class="w-100"></li>
+                  </ul>
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary btn-sm">OK</button>
+              </div>
+            </div>
+            </div>
+          </div>
+
+          <div class="modal fade bd-data-modal-pmc" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title mt-0" style="font-size: 1rem;">PMC</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="row list-unstyled">
+                      <li class="col-4">Units</li>
+                      <li class="col-4">CBM</li>
+                      <li class="col-4">Kilos</li>
+                    </ul>
+                    <ul class="row list-unstyled mb-2">
+                      <li class="col-4"><input type="number" class="w-100" disabled="disabled"></li>
+                      <li class="col-4"><input type="number" class="w-100" disabled="disabled"></li>
+                      <li class="col-4"><input type="number" class="w-100" disabled="disabled"></li>
+                    </ul>
+                    <ul class="row list-unstyled">
+                      <li class="col-4"><input type="number" class="w-100"></li>
+                      <li class="col-4"><input type="number" class="w-100"></li>
+                      <li class="col-4"><input type="number" class="w-100"></li>
+                    </ul>
+                  
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-primary btn-sm">OK</button>
+                </div>
+              </div>
+              </div>
+            </div>
+
+            <div class="modal fade bd-data-modal-bulk" tabindex="-1" role="dialog" aria-hidden="true">
+              <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title mt-0" style="font-size: 1rem;">BULK</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <ul class="row list-unstyled">
+                        <li class="col-4">Units</li>
+                        <li class="col-4">CBM</li>
+                        <li class="col-4">Kilos</li>
+                      </ul>
+                      <ul class="row list-unstyled mb-2">
+                        <li class="col-4"><input type="number" class="w-100" disabled="disabled"></li>
+                        <li class="col-4"><input type="number" class="w-100" disabled="disabled"></li>
+                        <li class="col-4"><input type="number" class="w-100" disabled="disabled"></li>
+                      </ul>
+                      <ul class="row list-unstyled">
+                        <li class="col-4"><input type="number" class="w-100"></li>
+                        <li class="col-4"><input type="number" class="w-100"></li>
+                        <li class="col-4"><input type="number" class="w-100"></li>
+                      </ul>
+                    
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-sm">OK</button>
+                  </div>
+                </div>
+                </div>
+              </div>
+        </div>
+
+
         
 
+
+        <div id="mainTooltip" class="hidden">
+          <p><span id="value"></span></p>
+        </div>
+
+        
+
+        <script src="/static/assets/js/jquery.min.js"></script>
+        <script src="/static/assets/js/bootstrap.bundle.min.js"></script>
+        <!-- <script src="https://d3js.org/d3.v4.js"></script> -->
+
+        <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+         <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+        
+        <style>
+
+.chartT43 svg {
+    margin: auto; display: table;
+  }
+
+        .piecharts {
+        text-align: center;
+        padding-top: 50px;
+      }
+      .arc text {
+        font: 10px sans-serif;
+        text-anchor: middle;
+      }
+
+      .pieBox{
+          display: inline-block;
+          height: auto;
+      }
+
+#mainTooltip {
+    position: absolute;
+    min-width :90px;
+    height: 40px;
+    padding: 0 0 25px 0;
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 5px;
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+    fill: #fff;
+    color: #fff;
+    text-anchor: middle;
+    text-align: center;
+    font-weight: bold;
+    z-index: 9999;
+}
+#mainTooltip:before {
+    border: solid;
+    border-color: rgba(0,0,0,0.6) transparent;
+    border-width: 10px 10px 0 10px;
+    top: 100%;
+    content: "";
+    left: 43%;
+    position: absolute;
+    z-index: 99;
+}
+#mainTooltip.hidden {
+    display: none;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+        </style>
+
         <script>
+
+
+      var dataT4= [
+        {
+          "letter": "A",
+          "sideleft": true,
+          "frequency": 1.2
+        },
+        {
+          "letter": "B",
+          "frequency": 1
+        }
+      ]
+
+          //barchart
+          drawBarChart_t4('.chartT41', dataT4, 'small');
+          drawBarChart_t4('.chartT42', dataT4, 'small');
+          drawBarChart_t4('.chartT43', dataT4, 'large');
+
+          function drawBarChart_t4(chartTo, dataT4, chtype) {
+
+
+    if(chtype == 'large') {
+      margin = {top: 10, right: 0, bottom: 30, left: -20},
+      height = 230 - margin.top - margin.bottom;
+      width = 200 - margin.left - margin.right;
+    } else {
+      margin = {top: 10, right: 10, bottom: 30, left: 0},
+       height = 200 - margin.top - margin.bottom;
+      width = 100 - margin.left - margin.right;
+    }
+
+var formatPercent = d3.format(".0%");
+
+var x = d3.scale.ordinal()
+    .rangeRoundBands([0, width], .1);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .tickFormat(formatPercent);
+
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>Frequency:</strong> <span style='color:#5f89ad'>" + d.frequency + "</span>";
+  })
+
+var svg = d3.select(chartTo).append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+svg.call(tip);
+
+
+  x.domain(dataT4.map(function(d) { return d.letter; }));
+  y.domain([0, d3.max(dataT4, function(d) { return d.frequency; })]);
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Frequency");
+
+  svg.selectAll(".bar")
+      .data(dataT4)
+    .enter().append("rect")
+      .attr("class", function(d) {; 
+      if(d.sideleft) {
+        return 'bar left' 
+      } else {
+        return 'bar right' 
+      }
+        
+      })
+      .attr("x", function(d) { return x(d.letter); })
+      .attr("width", function(d) {
+        if(chtype == 'large') {
+          console.log('type=',chtype)
+          return x.rangeBand()
+        } else {
+          return x.rangeBand()
+        }
+        
+      })
+      .attr("y", function(d) { return y(d.frequency); })
+      .attr("height", function(d) { return height - y(d.frequency); })
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide)
+
+
+
+function type(d) {
+  d.frequency = +d.frequency;
+  return d;
+}
+          }
+          
+
+          //barchart end
+
+
+
+
+
+          $('#playpouseBtn').on('click', function() {
+            $(this).find('.fa-play-circle').toggleClass('d-none');
+            $(this).find('.fa-pause-circle').toggleClass('d-none');
+          })
+
+
+          //Clock
+
+var canvas = document.getElementById("clockcanvas");
+var ctx = canvas.getContext("2d");
+var radius = canvas.height / 2;
+ctx.translate(radius, radius);
+radius = radius * 0.90
+setInterval(drawClock, 1000);
+
+function drawClock() {
+  drawFace(ctx, radius);
+  drawNumbers(ctx, radius);
+  drawTime(ctx, radius);
+}
+
+function drawFace(ctx, radius) {
+  var grad;
+  ctx.beginPath();
+  ctx.arc(0, 0, radius, 0, 2*Math.PI);
+  ctx.fillStyle = 'white';
+  ctx.fill();
+  grad = ctx.createRadialGradient(0,0,radius*0.95, 0,0,radius*1.05);
+  grad.addColorStop(0, '#333');
+  grad.addColorStop(0.5, 'white');
+  grad.addColorStop(1, '#333');
+  ctx.strokeStyle = grad;
+  ctx.lineWidth = radius*0.1;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(0, 0, radius*0.1, 0, 2*Math.PI);
+  ctx.fillStyle = '#333';
+  ctx.fill();
+}
+
+function drawNumbers(ctx, radius) {
+  var ang;
+  var num;
+  ctx.font = radius*0.15 + "px arial";
+  ctx.textBaseline="middle";
+  ctx.textAlign="center";
+  for(num = 1; num < 13; num++){
+    ang = num * Math.PI / 6;
+    ctx.rotate(ang);
+    ctx.translate(0, -radius*0.85);
+    ctx.rotate(-ang);
+    ctx.fillText(num.toString(), 0, 0);
+    ctx.rotate(ang);
+    ctx.translate(0, radius*0.85);
+    ctx.rotate(-ang);
+  }
+}
+
+function drawTime(ctx, radius){
+    var now = new Date();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+    //hour
+    hour=hour%12;
+    hour=(hour*Math.PI/6)+
+    (minute*Math.PI/(6*60))+
+    (second*Math.PI/(360*60));
+    drawHand(ctx, hour, radius*0.5, radius*0.07);
+    //minute
+    minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));
+    drawHand(ctx, minute, radius*0.8, radius*0.07);
+    // second
+    second=(second*Math.PI/7);
+    drawHand(ctx, second, radius*0.9, radius*0.02);
+}
+
+function drawHand(ctx, pos, length, width) {
+    ctx.beginPath();
+    ctx.lineWidth = width;
+    ctx.lineCap = "round";
+    ctx.moveTo(0,0);
+    ctx.rotate(pos);
+    ctx.lineTo(0, -length);
+    ctx.stroke();
+    ctx.rotate(-pos);
+}
+//Clock end
+
+
+        var piedata = [
+    {
+        "str_lab": "Jon",
+        "num": 100
+    },
+    {
+        "str_lab": "Shaggydog",
+        "num": 44
+    },
+    {
+        "str_lab": "Ghost",
+        "num": 215
+    },
+    {
+        "str_lab": "Nymeria",
+        "num": 385
+    },
+    {
+        "str_lab": "Summer",
+        "num": 141
+    },
+    {
+        "str_lab": "Grey wind",
+        "num": 340
+    }
+];
+        
+        newchart('#tab3chart1',piedata, 1);
+
+        newchart('#tab3chart2',piedata, 2)
+
+          function newchart(bindTo, data, chartNum) {
+            
+  var width = 170,
+      height = 170,
+      radius = Math.min(width, height) / 2;
+  var divNode = d3.select("body").node();
+  var outerRadius = radius - 10,
+      innerRadius = radius - 80;
+  var color = d3.scale.ordinal()
+      .range(["#2E7D32","#53856D","#FF7043", "#1FDA9A", "#28ABE3", "#DF514C", "#DAE9F7"]);
+
+  var arc = d3.svg.arc()
+      .outerRadius(radius - 10)
+      .innerRadius(radius - 80);
+
+  var pie = d3.layout.pie()
+      .sort(null)
+      .value(function(d) { return d.num; });
+
+  d3.select(bindTo).append("div")
+      .attr("id",('mainPie'+chartNum))
+      .attr("class","pieBox");
+
+  var svg = d3.select('#mainPie'+chartNum).append("svg")
+      .attr("width", width)
+      .attr("height", height)
+    .append("g")
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+  var defs = svg.append("defs");
+  var filter = defs.append("filter")
+                  .attr("id", "drop-shadow")
+                  .attr("height","130%");
+
+  filter.append("feGaussianBlur")
+          .attr("in","SourceAlpha")
+          .attr("stdDeviation", 2)
+          .attr("result", "blur");
+
+  filter.append("feOffset")
+      .attr("in", "blur")
+      .attr("dx", 3)
+      .attr("dy", 3)
+      .attr("result", "offsetBlur");
+      var feMerge = filter.append("feMerge");
+
+  feMerge.append("feMergeNode")
+      .attr("in", "offsetBlur")
+  feMerge.append("feMergeNode")
+      .attr("in", "SourceGraphic");
+
+  var g = svg.selectAll(".arc")
+        .data(pie(data))
+      .enter().append("g")
+        .attr("class", "arc");
+
+    g.append("path")
+        .attr("d", arc)
+        .style("fill", function(d) { return color(d.data.num); })
+        .on("mousemove", function(d) {
+            d3.select(this)
+                .attr("stroke","#fff")
+                .attr("stroke-width","2px")
+            d3.select(this)
+              .transition()
+              .duration(500)
+              .ease('elastic')
+              .attr('transform',function(d){
+                var dist = 1;
+                d.midAngle = ((d.endAngle - d.startAngle)/2) + d.startAngle;
+                var x = Math.sin(d.midAngle) * dist;
+                var y = Math.cos(d.midAngle) * dist;
+                return 'translate(' + x + ',' + y + ')';
+              });
+              var mousePos = d3.mouse(divNode);
+              d3.select("#mainTooltip")
+                .style("left", mousePos[0] - 40 + "px")
+                .style("top", mousePos[1] - 70 + "px")
+                .select("#value")
+                .attr("text-anchor", "middle")
+                .html(d.data.str_lab + "<br />" + d.data.num);
+
+            d3.select("#mainTooltip").classed("hidden", false);
+          })
+        .on("mouseout", function(d){
+            d3.select(this)
+                .attr("stroke","none")
+                .style("filter","none");
+            d3.select(this)
+              .transition()
+              .duration(500)
+              .ease('bounce')
+              .attr('transform','translate(0,0)');
+
+            d3.select("#mainTooltip").classed("hidden", true);
+        });
+        var centerSvg = svg.append('circle')
+          .attr('fill','white')
+          .attr('r','62');
+
+        svg.append('text')
+          .style('fill', 'grey')
+          .style("font-size", "30px")
+          .style("font-weight", "bold")
+          .attr("transform", "translate(0," + 10 + ")")
+          .attr("text-anchor", "middle")
+          .html(data.length);
+        }
+
+        
+
 
         function updateChart(d){
 
@@ -678,6 +1581,14 @@ tr:nth-child(even) {
               document.getElementById('no_show_kgs2').textContent = (total_cargo_kgs * .1).toFixed(1);
               document.getElementById('overbooking_cbm2').textContent = (total_cargo_cbm * .1).toFixed(1);
               document.getElementById('overbooking_kgs2').textContent = (total_cargo_kgs * .1).toFixed(1);
+              document.getElementById('tdc_cbm2').textContent = (total_cargo_cbm + (total_cargo_cbm * (.1 + .1))).toFixed(1);
+              document.getElementById('tdc_kgs2').textContent = (total_cargo_kgs + (total_cargo_kgs * (.1 + .1))).toFixed(1);
+              //
+              var target_yield = 1.1;
+              var target_revenue = target_yield * total_cargo_kgs;
+
+              document.getElementById('target_yield').textContent = target_yield;
+              document.getElementById('target_revenue').textContent = target_revenue.toFixed(0);
               
               //console.log(total_ake_cbm,total_ake_kgs,total_pmc_cbm,total_pmc_kgs);
               //console.log(data1);
